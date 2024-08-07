@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "lecture_1.js",
   "scripts": {
-    "start": "node lecture_1.js",
-    "dev":"nodemon lecture_1.js"
+    "start": "node Express.js",
+    "dev":"nodemon Express.js"
   },
   "author": "",
   "license": "ISC",
