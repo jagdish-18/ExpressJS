@@ -1,129 +1,84 @@
-// const express = require('express');
-
-// const server = express();
-
-// server.get('/' , (req , res) =>{
-//     res.write('welcome to learn nodejs');
-//     res.end();
-// })
-
-// server.get('/contact' , (req , res) =>{
-//     res.setHeader('text-contant' , 'paragraph');
-//     res.send('Hello World');
-//     res.end();
-// })
-
-// server.get('/about' , (req , res) =>{
-//     res.send("<h1>As an asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications. </h1>");
-//     res.end();
-// })
-
-// server.listen('5000' , ()=>{
-//     console.log('server started at http://localhost:5000');
-    
-// });
-
-// const express = require('express');
-
-// const server = express();
-
-// server.get('/' , (req , res) =>{
-//     res.setHeader('Content-type' , 'text/plain');
-//     res.send('this is a server');
-//     res.end();
-// })
-
-// server.listen('1234' , () =>{
-//     console.log(`server start at http://localhost:1234`);
-    
-// })
-
-
-// date 06-08-2024
-
-// const express = require('express');
-// const server = express();
-
-// server.get('/user' , (req , res) =>{
-//     res.status(200);
-//     res.json({message:'User Get Method'});
-// })
-
-// server.post('/user' , (req , res) =>{
-//     res.status(200);
-//     res.json({message:'User Post Method'});
-// })
-
-// server.put('/user' , (req , res)=>{
-//     res.json({message:'User Put Method'});
-// })
-
-// server.patch('/user' , (req , res) =>{
-//     res.json({message:'User Patch Method'});
-// })
-
-// server.delete('/user' , (req , res) =>{
-//     res.json({message:'User Delete Method'})
-// })
-
-// server.listen(8000 , ()=>{
-//     console.log(`server start at http://localhost:8000`);   
-// })
-
-// lecture_2
-
 const express = require('express');
 const server = express();
 
-// const data = require('./data.json');
-// console.log(data);
-
-// server.get("/data" , (req , res) =>{
-//     res.status(200);
-//     res.json(data)
-// })
-
-//second way
-// const fs = require('fs');
-// const data = fs.readFileSync('./data.json' , 'utf-8');
-// console.log(data);
-
-// server.get('/data' , (req , res) =>{
-//     res.status(200);
-//     res.json(JSON.parse(data));
-    
-// })
-
-// server.listen(6000 , ()=>{
-//     console.log(`server start at http://localhost:6000`);
-    
-// })
-
-
 //middleware
 
-let middleware = (req , res , next) =>{
-    console.log(req.query);
-    if(req.query.password === '1234'){
-        console.log("success");
-        next();     
-    }else{
-        return res.json({message:"Inccorect Way!!!!"});
-    } 
-}
+// Built-in middleware
+//1-> express.json() ->raw / json formate
+//2-> express.urlencoded() -> form
+//3-> express.static()
 
-server.use(middleware)
+//1-> express.json() ->raw / json formate
+// server.use(express.json());
+// function middleware(req, res, next) {
+//     console.log(req.body);
+//     if (req.body.age >= 18) {
+//         console.log("success");
+//         next();
+//     } else {
+//         return res.json({ message: "Inccorect Way!!!!" });
+//     }
+// }
 
-// server.get('/',(req,res)=>{
+// 2-> express.urlencoded() -> form
+// server.use(express.urlencoded({extended : true}))
+// function middleware(req, res, next) {
+//     console.log(req.body);
+//     if (req.body.age >= 18) {
+//         console.log("success");
+//         next();
+//     } else {
+//         return res.json({ message: "Inccorect Way!!!!" });
+//     }
+// }
+
+//3-> express.static()
+// server.use("/hey",express.static('public'));
+// function middleware(req, res, next) {
+//         console.log(req.body);
+//         if (req.body.age >= 18) {
+//             console.log("success");
+//             next();
+//         } else{
+//             return res.json({ message: "Inccorect Way!!!!" });
+//         }
+//     }
+
+// server.get('/', middleware ,(req,res)=>{
 //     res.write("<h1>Welcome to server</h1>")
 //     res.end()
 // })
 
-server.get('/', middleware , (req , res) =>{
+// server.get('/', (req , res) =>{
+//     res.json({message:'hello'});
+// })
+
+
+ // third party middleware
+ 
+//  let loggerfunction = (req , res , next) =>{
+//     console.log(req.url , "\t" , req.method , '\t');
+//     next();
+//  }
+
+//  server.use(loggerfunction)
+
+const morgan = require('morgan');
+
+// server.use(morgan('dev'))
+// server.use(morgan('tiny'))
+server.use(morgan('combined'))
+
+
+server.get('/', (req , res) =>{
     res.json({message:'hello'});
 })
 
-server.listen(6000 , ()=>{
+server.post('/', (req , res) =>{
+    res.json({message:'hello'});
+})
+
+server.listen(6000 , () =>{
      console.log(`server start at http://localhost:6000`);
         
     })

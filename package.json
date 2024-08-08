@@ -4,13 +4,14 @@
   "main": "lecture_1.js",
   "scripts": {
     "start": "node Express.js",
-    "dev":"nodemon Express.js"
+    "dev": "nodemon Express.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
