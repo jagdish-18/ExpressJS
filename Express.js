@@ -1,69 +1,81 @@
 const express = require('express');
 const server = express();
-const product = require('./product.json');
 const morgan = require('morgan');
-const user = require('./user.json')
+const user = require('./user.json');
+const product = require('./product.json');
 
 server.use(express.json());
-server.use(express.urlencoded({extended: "true"}));
+server.use(express.urlencoded({extended: true}));
 server.use(morgan('dev'));
 
-server.get('/', (req , res) =>{
-    res.json(product)
-})
+server.get('/product', (req , res) =>{
+    res.json(product);
+});
 
 //CRUD
 
-//Add New Product -Create
-server.post("/product" , (req , res) =>{
-    // console.log(req.body);
-    product.push(req.body);
-    res.json({product : req.body , message :`Product Added Success`})
-    
+// Replace Data -PUT
+server.put("/product/:id" , (req ,res) =>{
+   let id = +req.params.id;
+   let productIndex = product.findIndex((product) => product.id === id);
+   // console.log(productIndex);
+   product.splice(productIndex , 1 , {...req.body});
+   res.json({message: `product Replaces Success..`});
+});
+
+// Update Data - PATCH
+server.patch("/product/:id" , (req ,res) =>{
+   let id = +req.params.id;
+   let productIndex = product.findIndex((product) => product.id === id);
+   // console.log(productIndex);
+   const products = product[productIndex]
+   // console.log(products);
+   product.splice(productIndex , 1 , {...products , ...req.body});
+   res.json({message : `Product Updated SuccessFully`})
+   
 })
 
-// Get All Product  - Read
-server.get("/product" , (req ,res) =>{
-    res.json(product)
+//Delete Data - DELETE
+server.delete("/product/:id" , (req , res) =>{
+   let id = +req.params.id;
+   let productIndex = product.findIndex((product) => product.id === id);
+   const products = product[productIndex];
+   product.splice(productIndex , 1);
+   res.json({products , message : `Product Deleted SuccessFully`})
 })
 
-// Get Single Product -Read
-// server.get("/product/:id" , (req ,res) =>{
-//     let id = +req.params.id;
-//     let item = product.find((product) => product.id === id);
-//     res.json(item);
-// })
+server.get("/user" , (req ,res) =>{
+   res.json(user)
+})
+
+// Replace Data - PUT
+server.put("/user/:id" , (req , res) =>{
+   let id = +req.params.id;
+   let userIndex = user.findIndex((user) => user.id === id);
+   user.splice(userIndex , 1 , {...req.body});
+   res.json({message : `User Replace Success`})
+})
+
+//  Update Data - PATCH
+server.patch("/user/:id" , (req , res) =>{
+   let id = +req.params.id;
+   let userIndex = user.findIndex((user) => user.id === id);
+   const users = user[userIndex];
+   user.splice(userIndex , 1 ,{...users , ...req.body});
+   res.json({message : `Update Data Success`});
+})
+
+// Delete Data - DELETE
+server.delete("/user/:id" , (req ,res) =>{
+   let id = +req.params.id;
+   let userIndex = user.findIndex((user) => user.id === id);
+   // const users = user[userIndex];
+   user.splice(userIndex , 1);
+   res.json({message : `User Deleted SuccesFully`});
+})
 
 
-server.listen(6000 , () =>{
-     console.log(`server start at http://localhost:6000`);
-        
-    })
 
-
- server.get("/userdata" , (req ,res) =>{
-    res.json(user);
- })   
-
-
- server.post('/user' , (req ,res) =>{
-    user.push(req.body);
-    res.json({user : req.body ,message: `user Added Succesfully`})
- })
-
- server.get('/user' , (req ,res) =>{
-    res.json(user)
- })
-
- server.get("/user/:id" , (req ,res) =>{
-    let id = +req.params.id;
-    let item = user.find((user) => user.id === id);
-    res.json(item)
- })
-
- server.listen(7000 , () =>{
-    console.log(`server started at http://localhost:7000`);
-    
- })
-
-
+server.listen(1234 , () =>{
+   console.log(`Server Start at http://localhost:1234`);
+});
