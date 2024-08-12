@@ -7,7 +7,7 @@ exports.addNewProduct = (req, res) => {
 };
 
 exports.getAllProducts = (req, res) => {
-  // console.log(product);
+  console.log(product);
   res.json(product);
 };
 
