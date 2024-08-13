@@ -1,7 +1,7 @@
 const express = require('express');
 const server = express();
 const morgan = require('morgan');
-const productRoutes = require('./routes/product.routes');
+const usersRoutes = require('./routes/users.routes');
 
 
 server.use(express.json());
@@ -12,10 +12,10 @@ server.get('/', (req , res) =>{
     res.send("WelCome To Express Server!!!!");
 });
 
-server.use("/api/product" , productRoutes)
+server.use("/api/user" , usersRoutes)
 
-server.listen(7000 , () =>{
-   console.log(`Server Start At http://localhost:7000/api/product`);
+server.listen(8000 , () =>{
+   console.log(`Server Start At http://localhost:8000/api/user`);
    
 })
 
