@@ -1,48 +1,48 @@
-const product = require("../product.json");
+// product add   /// connect with database
 
-exports.addNewProduct = (req, res) => {
-  //   console.log(req.body);
-  product.push(req.body);
-  res.json({ product: req.body, message: `Product Added success` });
+const Product = require("../model/product.model");
+
+exports.addNewProduct = async (req,res) =>{
+  try{
+    // console.log(req.body);
+    const {productName , title , price , discription , rating , othersProducts } = req.body;
+    let product = await Product.findOne({productName :productName});
+    if(product)
+      return res.status(400).json({message : "Product Already Exist.."});
+    product = await Product.create({
+      productName , title , price , discription , rating , othersProducts
+    });
+    res.status(201).json({product , message : "Product added"})
+  }catch(error){
+    console.log(error);
+    res.status(500).json({message : "Internal Server Error"})
+    
+  }
 };
 
-exports.getAllProducts = (req, res) => {
-  console.log(product);
-  res.json(product);
+// Get All Product
+exports.getAllProduct = async (req ,res) =>{
+  try{
+    let product = await Product.find();
+    res.status(200).json(product);
+  }catch(error){
+    console.log(error);
+    res.status(500).json({message : "Internal Server Error"})
+  }
 };
 
-exports.getProduct = (req, res) => {
-  let id = +req.params.id;
-  let item = product.find((product) => product.id === id);
-  res.json(item);
+// Get Single Product
+exports.getProduct = async (req ,res) =>{
+  try{
+    // let product = await Product.findOne({_id :req.query.userId});
+    let product = await Product.findById(req.query.userId); 
+    if(!product)
+      return res.status(404).json({message : "Product Not Found"});
+    res.status(200).json(product)
+  }catch (error){
+    console.log(error);
+    res.status(500).json({message : "Internal Server Error"})
+  }
 };
 
-exports.replaceProduct = (req, res) => {
-  let id = +req.params.id;
-  // console.log(id);
-  let productIndex = product.findIndex((product) => product.id === id);
-  // console.log(productIndex);
-  product.splice(productIndex, 1, { ...req.body });
-  res.json({ message: "Product Replace Success" });
-};
 
-exports.updateProduct = (req, res) => {
-  let id = +req.params.id;
-  let productIndex = product.findIndex((product) => product.id === id);
-  // console.log(productIndex);
-  const products = product[productIndex];
-  // console.log(products);
-  product.splice(productIndex, 1, { ...products, ...req.body });
-  res.json({ message: `Product Updated SuccessFully` });
-};
-
-exports.deleteProduct = (req, res) => {
-  let id = +req.params.id;
-  // console.log(id);
-  let productIndex = product.findIndex((product) => product.id === id);
-  // console.log(productIndex);
-  const products = product[productIndex];
-  // console.log(products);
-  product.splice(productIndex, 1);
-  res.json({ products, message: "Product Delete Success" });
-};
