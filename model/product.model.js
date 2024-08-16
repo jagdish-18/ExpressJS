@@ -10,7 +10,8 @@ const productSchema = mongoose.Schema({
         type : String
     },
     rating : Number,
-    othersProducts : [String]
+    othersProducts : [String],
+    image : [String]
 })
 
 module.exports = mongoose.model("product" , productSchema)
