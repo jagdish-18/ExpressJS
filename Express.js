@@ -4,16 +4,19 @@ const morgan = require('morgan');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
 const mongoose = require("mongoose");
+require('dotenv').config();
+const port = process.env.PORT
+const mongo_url = process.env.MONGO_URL
+
 
 // Database Connection
-// mongoose.connect("mongodb://127.0.0.1:27017/users")
-// .then(() => console.log(`Database Connection Established SuccessFully`))
-// .catch(err => console.log(err))
+mongoose.connect(mongo_url )
+.then(() => console.log(`Database Connection Established SuccessFully`))
+.catch(err => console.log(err))
 
-mongoose.connect("mongodb://127.0.0.1:27017/product")
-        .then(() => console.log(`Database Connection Established SuccessFully`))
-        .catch(err => console.log(err))
-        
+// mongoose.connect(mongo_url)
+//         .then(() => console.log(`Database Connection Established SuccessFully`))
+//         .catch(err => console.log(err)) 
 
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
@@ -26,8 +29,10 @@ server.get('/', (req , res) =>{
 server.use("/api/product" , productRoutes);
 server.use("/api/user" , userRoutes);
 
-server.listen(7000 , () =>{
-   console.log(`Server Start At http://localhost:7000`);
+server.listen(port , () =>{
+   console.log(`Server Start At http://localhost:${port}`);
    
 })
+
+
 
