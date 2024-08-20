@@ -6,7 +6,7 @@ exports.addNewUser = async (req , res) =>{
     try{
         // console.log(req.body);
         const {firstName , lastName , email , age ,hobbies , address} = req.body;
-        let user = await User.findOne({email : email});
+        let user = await User.findOne({email : email , isDelete : false});
         if(user)
             return res.status(400).json({message : "User Aleready Exist....."});
         user = await User.create({
@@ -23,7 +23,7 @@ exports.addNewUser = async (req , res) =>{
 // Get All Users
 exports.getAllUser = async (req , res) =>{
     try{
-        let users = await User.find();
+        let users = await User.find({isDelete : false});
         res.status(200).json(users);
     }catch (error){
         console.log(error);
@@ -68,7 +68,7 @@ exports.updateUser = async (req , res) =>{
 // Delete User
 exports.deleteUser = async (req , res) =>{
     try{
-        let user = await User.findById(req.query.userId);
+        let user = await User.findOne({ _id : req.query.userId , isDelete : false});
         if(!user){
             return res.status(404).json({message : "User Not Found"});
         }

@@ -11,7 +11,11 @@ const productSchema = mongoose.Schema({
     },
     rating : Number,
     othersProducts : [String],
-    image : [String]
-})
+    image : [String],
+    isDelete : {
+        type : Boolean,
+        default : false
+    }
+});
 
 module.exports = mongoose.model("product" , productSchema)
