@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 require('dotenv').config();
 const port = process.env.PORT
 const mongo_url = process.env.MONGO_URL
-console.log(mongo_url);
+// console.log(mongo_url);
 
 
 // Database Connection
