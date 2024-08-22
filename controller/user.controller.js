@@ -1,5 +1,6 @@
 const User = require("../model/user.model");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //Registration
 exports.registerUser = async (req , res) =>{
@@ -31,9 +32,19 @@ exports.loginUser = async (req ,res) =>{
     if(!matchPassword){
         return res.status(400).json({message : "Email Or Password Not metched...."})
     }
-    res.status(200).json({message : "Login Success" , user})
+    let token = await jwt.sign({userId : user._id} , process.env.JWT_SECRET ,);
+    res.status(200).json({message : "Login Success" , token})
   } catch (error) {
     console.log(error);
     res.status(500).json({message : "Internal Server Error"})
+  }
+}
+
+exports.userProfile = async (req ,res) =>{
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message : "Internal server Error"})
   }
 }
