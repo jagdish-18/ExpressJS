@@ -5,13 +5,18 @@ const jwt = require('jsonwebtoken');
 //Registration
 exports.registerUser = async (req , res) =>{
     try {
+      let imegePath = "";
         let user = await User.findOne({email : req.body.email , isDelete: false});
         if(user){
             return res.status(400).json({message : "User Alredy Exist....."});
         }
+        if(req.file){
+          // console.log(req.file.path);
+          imegePath = req.file.path.replace(/\\/g, "/");
+        }
         let hashPassword = await bcrypt.hash(req.body.password , 10);
         // console.log(hashPassword);
-        user = await User.create({...req.body , password : hashPassword});
+        user = await User.create({...req.body , password : hashPassword , profileImage : imegePath });
         user.save();
         res.status(201).json({user , message : "User Registration Success"})
     } catch (error) {

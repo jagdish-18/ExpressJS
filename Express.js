@@ -8,6 +8,7 @@ require('dotenv').config();
 const port = process.env.PORT
 const mongo_url = process.env.MONGO_URL
 // console.log(mongo_url);
+const path = require('path');
 
 
 // Database Connection
@@ -22,6 +23,7 @@ mongoose.connect(mongo_url)
 server.use(express.json());
 server.use(express.urlencoded({extended: true}));
 server.use(morgan('dev'));
+server.use("/public/images" , express.static(path.join(__dirname , 'public/images')));
 
 server.get('/', (req , res) =>{
     res.send("WelCome To Express Server!!!!");
