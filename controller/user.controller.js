@@ -99,3 +99,27 @@ exports.changePassword = async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" })
   }
 }
+
+exports.specialUser = async (req , res) =>{
+  try {
+    // let user = {
+    //   firstName : "jagdish",
+    //   lastName : "shiyal",
+    //   email : "jaggi@test.in",
+    //   mobileNo : "1234567891",
+    //   address : {
+    //     line1 : "pasodara",
+    //     line2 : "patiya",
+    //     picode : "122455"
+    //   }
+    //  }
+    let user = await User.findOne({firstName : req.query.name , isDelete : false})
+    if(!user)
+      return res.render('notFound.ejs')
+    res.render('user.ejs' , {user})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message : "Internal Server Error"});
+  }
+  
+}

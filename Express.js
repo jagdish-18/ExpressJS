@@ -9,6 +9,9 @@ const port = process.env.PORT
 const mongo_url = process.env.MONGO_URL
 // console.log(mongo_url);
 const path = require('path');
+const ejs = require('ejs');
+
+server.set("view engine" , 'ejs');
 
 
 // Database Connection
