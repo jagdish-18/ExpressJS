@@ -3,6 +3,7 @@ const server = express();
 const morgan = require('morgan');
 const productRoutes = require('./routes/product.routes');
 const userRoutes = require('./routes/user.routes');
+const cartRoutes = require('./routes/cart.routes');
 const mongoose = require("mongoose");
 require('dotenv').config();
 const port = process.env.PORT
@@ -34,6 +35,7 @@ server.get('/', (req , res) =>{
 
 server.use("/api/product" , productRoutes);
 server.use("/api/user" , userRoutes);
+server.use("/api/cart" , cartRoutes);
 
 server.listen(port , () =>{
    console.log(`Server Start At http://localhost:${port}`);
