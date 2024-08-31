@@ -3,15 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Page</title>
+    <style>
+        /* Basic reset */
+        body, h1, form, input, a, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body style */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        /* Form container */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        /* Form heading */
+        h1 {
+            font-size: 24px;
+            color: #333333;
+            margin-top: 0;
+            text-align: center;
+            margin: 25px 0px;
+        }
+
+        /* Input fields */
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        /* Link */
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit button */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0066cc;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #004d99;
+        }
+    </style>
 </head>
 <body>
+    <form action="/login" method="post">
         <h1>Login User</h1>
-        <form action="/login" method="post">
-            <input type="text" name="email" placeholder="Enter email" required>
-            <input type="password" name="password" placeholder="enter your password" required>
-            <a href="register">New user</a>
-            <button type="submit">Log in</button>
-        </form>
+        <input type="text" name="email" placeholder="Enter email" required>
+        <input type="password" name="password" placeholder="Enter your password" required>
+        <a href="register">New user</a>
+        <button type="submit">Log in</button>
+    </form>
 </body>
 </html>
