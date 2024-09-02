@@ -37,7 +37,7 @@ exports.loginUser = async (req ,res) =>{
     if(!matchPassword){
         return res.status(400).json({message : "Email Or Password Not metched...."})
     }
-    let token = await jwt.sign({userId : user._id} , process.env.JWT_SECRET ,);
+    let token = await jwt.sign({userId : user._id} , process.env.JWT_SECRET);
     res.status(200).json({message : "Login Success" , token})
   } catch (error) {
     console.log(error);

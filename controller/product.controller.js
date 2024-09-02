@@ -2,6 +2,7 @@
 
 const Product = require("../model/product.model");
 
+
 exports.addNewProduct = async (req,res) =>{
   try{
     // console.log(req.body);
