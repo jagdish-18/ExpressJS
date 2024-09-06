@@ -1,18 +1,17 @@
 // product add   /// connect with database
 
 const Product = require("../model/product.model");
-
+const ProductServices = require("../services/product.service");
+const productServices = new ProductServices()
 
 exports.addNewProduct = async (req,res) =>{
   try{
     // console.log(req.body);
     const {productName , title , price , discription , rating , othersProducts ,image} = req.body;
-    let product = await Product.findOne({productName :productName});
+    let product = await productServices.getProduct({title : req.body.title , isDelete : false});
     if(product)
       return res.status(400).json({message : "Product Already Exist.."});
-    product = await Product.create({
-      productName , title , price , discription , rating , othersProducts ,image
-    });
+    product = await productServices.addNewProduct({...req.body});
     res.status(201).json({product , message : "Product added"})
   }catch(error){
     console.log(error);
